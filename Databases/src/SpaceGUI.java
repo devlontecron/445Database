@@ -20,22 +20,12 @@ public class SpaceGUI extends JFrame implements ActionListener, TableModelListen
 	private JButton btnSpace, btnStaff, btnStaffSpace, btnSpaceBooking, btnCovered, btnUncovered, btnLots;
 	private JPanel pnlButtons, pnlLots;
 	private SpaceDB db;
-<<<<<<< HEAD
 	private List<Lot> list;
 	private String[] columnNames = {"Lot Name",
             "Location",
             "Floors",
             "Capacity"};
 
-=======
-	private List<Movie> list;
-	private String[] columnNames = {"Title",
-            "Year",
-            "Length",
-            "Genre",
-            "StudioName"};
-	private String
->>>>>>> origin/master
 	private Object[][] data;
 	private JTable table;
 	private JScrollPane scrollPane;
