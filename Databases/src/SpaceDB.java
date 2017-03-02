@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.sql.Date;
 
 /**
@@ -379,4 +380,20 @@ public class SpaceDB {
 		} 
 	}
 	
+	
+	/*
+	 * Below go the utility things
+	 */
+	
+	public Set<Integer> getUnavailable(){
+		
+		Set<Integer> toReturn = new HashSet<Integer>();
+		for(Covered c: this.getCovered()){
+			toReturn.add(c.getSpaceNo());
+		}
+		for(Uncovered u: this.getUncovered()){
+			toReturn.add(u.getSpaceNo());
+		}
+		return toReturn;
+	}
 }
