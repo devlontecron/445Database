@@ -24,7 +24,7 @@ public class SpaceDB {
 	private static Connection conn;
 	private List<Lot> list;
 	private List<Staff> staffList;
-	private List<Space> staffSpaces;
+	private List<Space> spaceList;
 	private List<Covered> coveredList;
 	private List<Uncovered> uncoveredList;
 	private List<SpaceBooking> bookingList;
@@ -390,12 +390,59 @@ public class SpaceDB {
 	public Set<Integer> getUnavailable() throws SQLException{
 		
 		Set<Integer> toReturn = new HashSet<Integer>();
-		for(Covered c: this.getCovered()){
-			toReturn.add(c.getSpaceNo());
+		for(Space s: this.getBookings()){
+			toReturn.add(s.getSpaceNo());
 		}
-		for(Uncovered u: this.getUncovered()){
-			toReturn.add(u.getSpaceNo());
+		for(Space s: this.getStaffSpaces()){
+			toReturn.add(s.getSpaceNo());
 		}
 		return toReturn;
+	}
+	
+	/**
+	 * Adds a new movie to the table.
+	 * @param movie 
+	 */
+	public void addSpace(Space space) {
+		String sql = "insert into youruwnetid.Movies values " + "(?, ?, null); ";
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setInt(1, space.getSpaceNo());
+			preparedStatement.setInt(2, space.getSpaceType());
+			
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e);
+			e.printStackTrace();
+		} 
+	}
+	
+	public List<Space> getSpaces() throws SQLException {
+		if (conn == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "select SpaceNo, SpaceType "
+				+ "from youruwnetid.Lots ";
+
+		staffSpaceList = new ArrayList<StaffSpace>();
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				int number = rs.getInt("SpaceNo");
+				String type = rs.getString("SpaceType");
+				Space spacepace = new Space(type, number);
+				spaceList.add(space);
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return spaceList;
 	}
 }
