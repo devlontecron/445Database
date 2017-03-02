@@ -36,6 +36,7 @@ public class SpaceDB {
 	 * @throws SQLException
 	 */
 	public static void createConnection() throws SQLException {
+
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", userName);
 		connectionProps.put("password", password);
