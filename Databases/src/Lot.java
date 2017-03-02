@@ -8,14 +8,6 @@ public class Lot {
 	
 	
 	/**
-	 * Initialize the movie parameters.
-	 * @param title
-	 * @param year
-	 * @param length
-	 * @param genre
-	 * @param studioName
-	 * @throws IllegalArgumentException if title or genre or studio name are null or empty,
-	 * length <= 0, year < 1920.
 	 */
 	public Lot(String LotName, String Location, int floors, int capacity) 
 	{

@@ -10,61 +10,56 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 /**
- * A user interface to view the movies, add a new movie and to update an existing movie.
- * The list is a table with all the movie information in it. The TableModelListener listens to
- * any changes to the cells to modify the values for reach movie.
- * @author mmuppa
+ * @author mmuppa & Devin Durham
  *
  */
 public class SpaceGUI extends JFrame implements ActionListener, TableModelListener
 {
-	
+
 	private static final long serialVersionUID = 1779520078061383929L;
-	private JButton btnList, btnSearch, btnAdd;
-	private JPanel pnlButtons, pnlContent;
+	private JButton btnSpace, btnStaff, btnStaffSpace, btnSpaceBooking, btnCovered, btnUncovered, btnLots;
+	private JPanel pnlButtons, pnlLots;
 	private SpaceDB db;
-	private List<Movie> list;
-	private String[] columnNames = {"Title",
-            "Year",
-            "Length",
-            "Genre",
-            "StudioName"};
-	
+	private List<Lot> list;
+	private String[] columnNames = {"Lot Name",
+            "Location",
+            "Floors",
+            "Capacity"};
+
 	private Object[][] data;
 	private JTable table;
 	private JScrollPane scrollPane;
-	private JPanel pnlSearch;
-	private JLabel lblTitle;;
-	private JTextField txfTitle;
-	private JButton btnTitleSearch;
-	
-	private JPanel pnlAdd;
+	private JPanel pnlSpace;
+	//private JLabel lblTitle;;
+
+
+
+	private JPanel pnlStaff;
 	private JLabel[] txfLabel = new JLabel[5];
 	private JTextField[] txfField = new JTextField[5];
 	private JButton btnAddMovie;
-	
-	
+
+
 	/**
 	 * Creates the frame and components and launches the GUI.
 	 */
 	public SpaceGUI() {
-		super("Movie Store");
-		
+		super("Parking Lots");
+
 		db = new SpaceDB();
 		try
 		{
-			list = db.getMovies();
-			
+			list = db.getLots();
+
 			data = new Object[list.size()][columnNames.length];
 			for (int i=0; i<list.size(); i++) {
-				data[i][0] = list.get(i).getTitle();
-				data[i][1] = list.get(i).getYear();
-				data[i][2] = list.get(i).getLength();
-				data[i][3] = list.get(i).getGenre();
-				data[i][4] = list.get(i).getStudioName();
-				
+				data[i][0] = list.get(i).getLotName();
+				data[i][1] = list.get(i).getLocation();
+				data[i][2] = list.get(i).getFloors();
+				data[i][3] = list.get(i).getCapacity();
+
 			}
-			
+
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
@@ -73,48 +68,65 @@ public class SpaceGUI extends JFrame implements ActionListener, TableModelListen
 		setVisible(true);
 		setSize(500, 500);
 	}
-    
+
 	/**
-	 * Creates panels for Movie list, search, add and adds the corresponding 
+	 * Creates panels for list, search, add and adds the corresponding
 	 * components to each panel.
 	 */
 	private void createComponents()
 	{
 		pnlButtons = new JPanel();
-		btnList = new JButton("Movie List");
-		btnList.addActionListener(this);
+		btnLots = new JButton("Lots");
+		btnLots.addActionListener(this);
+
+		btnSpace = new JButton("Space");
+		btnSpace.addActionListener(this);
+
+		btnStaffSpace = new JButton("Staff Space");
+		btnStaffSpace.addActionListener(this);
 		
-		btnSearch = new JButton("Movie Search");
-		btnSearch.addActionListener(this);
+		btnSpace = new JButton("Space");
+		btnSpace.addActionListener(this);
 		
-		btnAdd = new JButton("Add Movie");
-		btnAdd.addActionListener(this);
+		btnSpaceBooking = new JButton("Space Booking");
+		btnSpaceBooking.addActionListener(this);
 		
-		pnlButtons.add(btnList);
-		pnlButtons.add(btnSearch);
-		pnlButtons.add(btnAdd);
+		btnCovered = new JButton("Covered");
+		btnCovered.addActionListener(this);
+		
+		btnUncovered = new JButton("Uncovered");
+		btnUncovered.addActionListener(this);
+
+		
+		pnlButtons.add(btnLots);
+		pnlButtons.add(btnSpace);
+		pnlButtons.add(btnStaffSpace);
+		pnlButtons.add(btnSpaceBooking);
+		pnlButtons.add(btnCovered);
+		pnlButtons.add(btnUncovered);
+		
 		add(pnlButtons, BorderLayout.NORTH);
-		
-		//List Panel
-		pnlContent = new JPanel();
+
+		//Lots Panel
+		pnlLots = new JPanel();
 		table = new JTable(data, columnNames);
 		scrollPane = new JScrollPane(table);
-		pnlContent.add(scrollPane);
+		pnlLots.add(scrollPane);
+		table.getModel().addTableModelListener(this);
+
+		//Space Panel
+		pnlLots = new JPanel();
+		table = new JTable(data, columnNames);
+		scrollPane = new JScrollPane(table);
+		pnlLots.add(scrollPane);
 		table.getModel().addTableModelListener(this);
 		
-		//Search Panel
-		pnlSearch = new JPanel();
-		lblTitle = new JLabel("Enter Title: ");
-		txfTitle = new JTextField(25);
-		btnTitleSearch = new JButton("Search");
-		btnTitleSearch.addActionListener(this);
-		pnlSearch.add(lblTitle);
-		pnlSearch.add(txfTitle);
-		pnlSearch.add(btnTitleSearch);
-		
-		//Add Panel
-		pnlAdd = new JPanel();
-		pnlAdd.setLayout(new GridLayout(6, 0));
+		pnlSpace = new JPanel();
+
+
+		//Stafff Panel
+		pnlStaff = new JPanel();
+		pnlStaff.setLayout(new GridLayout(6, 0));
 		String labelNames[] = {"Enter Title: ", "Enter Year: ", "Enter Length: ", "Enter Genre: ", "Enter Studio Name: "};
 		for (int i=0; i<labelNames.length; i++) {
 			JPanel panel = new JPanel();
@@ -122,17 +134,17 @@ public class SpaceGUI extends JFrame implements ActionListener, TableModelListen
 			txfField[i] = new JTextField(25);
 			panel.add(txfLabel[i]);
 			panel.add(txfField[i]);
-			pnlAdd.add(panel);
+			pnlStaff.add(panel);
 		}
 		JPanel panel = new JPanel();
 		btnAddMovie = new JButton("Add");
 		btnAddMovie.addActionListener(this);
 		panel.add(btnAddMovie);
-		pnlAdd.add(panel);
-		
-		add(pnlContent, BorderLayout.CENTER);
-		
-		
+		pnlStaff.add(panel);
+
+		add(pnlLots, BorderLayout.CENTER);
+
+
 	}
 
 	/**
@@ -140,8 +152,8 @@ public class SpaceGUI extends JFrame implements ActionListener, TableModelListen
 	 */
 	public static void main(String[] args)
 	{
-		SpaceGUI movieGUI = new SpaceGUI();
-		movieGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		SpaceGUI SpaceGUI = new SpaceGUI();
+		SpaceGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 
@@ -151,44 +163,46 @@ public class SpaceGUI extends JFrame implements ActionListener, TableModelListen
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnList) {
+		if (e.getSource() == btnLots) {
 			try {
-				list = db.getMovies();
+				list = db.getLots();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			data = new Object[list.size()][columnNames.length];
 			for (int i=0; i<list.size(); i++) {
-				data[i][0] = list.get(i).getTitle();
-				data[i][1] = list.get(i).getYear();
-				data[i][2] = list.get(i).getLength();
-				data[i][3] = list.get(i).getGenre();
-				data[i][4] = list.get(i).getStudioName();
+				data[i][0] = list.get(i).getLotName();
+				data[i][1] = list.get(i).getLocation();
+				data[i][2] = list.get(i).getFloors();
+				data[i][3] = list.get(i).getCapacity();
 			}
-			pnlContent.removeAll();
+			
+			pnlLots.removeAll();
 			table = new JTable(data, columnNames);
 			table.getModel().addTableModelListener(this);
 			scrollPane = new JScrollPane(table);
-			pnlContent.add(scrollPane);
-			pnlContent.revalidate();
+			pnlLots.add(scrollPane);
+			pnlLots.revalidate();
+			this.repaint();
+
+		} else if (e.getSource() == btnSpace) {
+			pnlLots.removeAll();
+			pnlLots.add(pnlSpace);
+			pnlLots.revalidate();
+			this.repaint();
+		} else if (e.getSource() == btnStaff) {
+			pnlLots.removeAll();
+			pnlLots.add(pnlStaff);
+			pnlLots.revalidate();
 			this.repaint();
 			
-		} else if (e.getSource() == btnSearch) {
-			pnlContent.removeAll();
-			pnlContent.add(pnlSearch);
-			pnlContent.revalidate();
-			this.repaint();
-		} else if (e.getSource() == btnAdd) {
-			pnlContent.removeAll();
-			pnlContent.add(pnlAdd);
-			pnlContent.revalidate();
-			this.repaint();
 			
-		} else if (e.getSource() == btnTitleSearch) {
+		} /*else if (e.getSource() == btnTitleSearch) {
 			String title = txfTitle.getText();
 			if (title.length() > 0) {
-				list = db.getMovies(title);
+				list = db.
+						getMovies(title);
 				data = new Object[list.size()][columnNames.length];
 				for (int i=0; i<list.size(); i++) {
 					data[i][0] = list.get(i).getTitle();
@@ -197,12 +211,12 @@ public class SpaceGUI extends JFrame implements ActionListener, TableModelListen
 					data[i][3] = list.get(i).getGenre();
 					data[i][4] = list.get(i).getStudioName();
 				}
-				pnlContent.removeAll();
+				pnlLots.removeAll();
 				table = new JTable(data, columnNames);
 				table.getModel().addTableModelListener(this);
 				scrollPane = new JScrollPane(table);
-				pnlContent.add(scrollPane);
-				pnlContent.revalidate();
+				pnlLots.add(scrollPane);
+				pnlLots.revalidate();
 				this.repaint();
 			}
 		} else if (e.getSource() == btnAddMovie) {
@@ -214,22 +228,27 @@ public class SpaceGUI extends JFrame implements ActionListener, TableModelListen
 				txfField[i].setText("");
 			}
 		}
+*/
+	}
+
+	@Override
+	public void tableChanged(TableModelEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 
 	/**
 	 * Event handling for any cell being changed in the table.
-	 */
-	@Override
+	 	@Override
 	public void tableChanged(TableModelEvent e) {
 		int row = e.getFirstRow();
         int column = e.getColumn();
         TableModel model = (TableModel)e.getSource();
         String columnName = model.getColumnName(column);
         Object data = model.getValueAt(row, column);
-        
-        db.updateMovie(row, columnName, data);
-		
-	}
 
+        db.updateMovie(row, columnName, data);
+
+	}
+*/
 }

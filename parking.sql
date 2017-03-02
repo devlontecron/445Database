@@ -1,4 +1,4 @@
-CREATE TABLE Lot (
+CREATE TABLE Lots (
     LotName VARCHAR(30) PRIMARY KEY,
     Location VARCHAR(30),
     Capacity INTEGER,

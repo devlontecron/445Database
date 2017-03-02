@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -12,13 +13,13 @@ import java.sql.Date;
 
 /**
  * A class that consists of the database operations to insert and update the Movie information.
- * @author mmuppa
+ * @author mmuppa &durham
  *
  */
 
 public class SpaceDB {
-	private static String userName = "mmuppa"; //Change to yours
-	private static String password = "mysqlpassword";
+	private static String userName = "d1durham"; //Change to yours
+	private static String password = "VudPyirf";
 	private static String serverName = "cssgate.insttech.washington.edu";
 	private static Connection conn;
 	private List<Lot> list;
@@ -35,6 +36,7 @@ public class SpaceDB {
 	 * @throws SQLException
 	 */
 	public static void createConnection() throws SQLException {
+		
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", userName);
 		connectionProps.put("password", password);
@@ -56,7 +58,7 @@ public class SpaceDB {
 		}
 		Statement stmt = null;
 		String query = "select LotName, Location, Capacity, Floors "
-				+ "from youruwnetid.Lots ";
+				+ "from d1durham.Lots ";
 
 		list = new ArrayList<Lot>();
 		try {
@@ -85,7 +87,7 @@ public class SpaceDB {
 	 * @param movie 
 	 */
 	public void addLot(Lot lot) {
-		String sql = "insert into youruwnetid.Movies values " + "(?, ?, ?, ?, null); ";
+		String sql = "insert into d1durham.Movies values " + "(?, ?, ?, ?, null); ";
 
 		PreparedStatement preparedStatement = null;
 		try {
@@ -111,7 +113,7 @@ public class SpaceDB {
 		
 		Staff staff = staffList.get(row);
 		int id = staff.getStaffNo();
-		String sql = "update youruwnetid.Lot set " + columnName + " = ?  StaffNo = ?";
+		String sql = "update d1durham.Lot set " + columnName + " = ?  StaffNo = ?";
 		System.out.println(sql);
 		PreparedStatement preparedStatement = null;
 		try {
@@ -140,7 +142,7 @@ public class SpaceDB {
 		}
 		Statement stmt = null;
 		String query = "select StaffNo, PhoneExt, LicPlateNo "
-				+ "from youruwnetid.Lots ";
+				+ "from d1durham.Lots ";
 
 		staffList = new ArrayList<Staff>();
 		try {
@@ -168,7 +170,7 @@ public class SpaceDB {
 	 * @param movie 
 	 */
 	public void addStaff(Staff staff) {
-		String sql = "insert into youruwnetid.Movies values " + "(?, ?, ?, null); ";
+		String sql = "insert into d1durham.Movies values " + "(?, ?, ?, null); ";
 
 		PreparedStatement preparedStatement = null;
 		try {
@@ -194,7 +196,7 @@ public class SpaceDB {
 		}
 		Statement stmt = null;
 		String query = "select SpaceNo, MonthlyRate "
-				+ "from youruwnetid.Lots ";
+				+ "from d1durham.Lots ";
 
 		coveredList = new ArrayList<Covered>();
 		try {
@@ -221,7 +223,7 @@ public class SpaceDB {
 	 * @param movie 
 	 */
 	public void addCovered(Covered covered) {
-		String sql = "insert into youruwnetid.Movies values " + "(?, ?, null); ";
+		String sql = "insert into d1durham.Movies values " + "(?, ?, null); ";
 
 		PreparedStatement preparedStatement = null;
 		try {
@@ -241,7 +243,7 @@ public class SpaceDB {
 		}
 		Statement stmt = null;
 		String query = "select SpaceNo "
-				+ "from youruwnetid.Lots ";
+				+ "from d1durham.Lots ";
 
 		uncoveredList = new ArrayList<Uncovered>();
 		try {
@@ -267,7 +269,7 @@ public class SpaceDB {
 	 * @param movie 
 	 */
 	public void addUncovered(Uncovered uncovered) {
-		String sql = "insert into youruwnetid.Movies values " + "(?, null); ";
+		String sql = "insert into d1durham.Movies values " + "(?, null); ";
 
 		PreparedStatement preparedStatement = null;
 		try {
@@ -286,7 +288,7 @@ public class SpaceDB {
 		}
 		Statement stmt = null;
 		String query = "select BookingId, SpaceNo, StaffNo, VisitorLic, DateOfVisit "
-				+ "from youruwnetid.Lots ";
+				+ "from d1durham.Lots ";
 
 		bookingList = new ArrayList<SpaceBooking>();
 		try {
@@ -316,7 +318,7 @@ public class SpaceDB {
 	 * @param movie 
 	 */
 	public void addBooking(SpaceBooking booking) {
-		String sql = "insert into youruwnetid.Movies values " + "(?, ?, ?, ?, ?, null); ";
+		String sql = "insert into d1durham.Movies values " + "(?, ?, ?, ?, ?, null); ";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = conn.prepareStatement(sql);
@@ -339,7 +341,7 @@ public class SpaceDB {
 		}
 		Statement stmt = null;
 		String query = "select StaffNo, SpaceNo "
-				+ "from youruwnetid.Lots ";
+				+ "from d1durham.Lots ";
 
 		staffSpaceList = new ArrayList<StaffSpace>();
 		try {
@@ -366,7 +368,7 @@ public class SpaceDB {
 	 * @param movie 
 	 */
 	public void addStaffSpace(SpaceBooking booking) {
-		String sql = "insert into youruwnetid.Movies values " + "(?, ?, null); ";
+		String sql = "insert into d1durham.Movies values " + "(?, ?, null); ";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = conn.prepareStatement(sql);
@@ -385,7 +387,7 @@ public class SpaceDB {
 	 * Below go the utility things
 	 */
 	
-	public Set<Integer> getUnavailable(){
+	public Set<Integer> getUnavailable() throws SQLException{
 		
 		Set<Integer> toReturn = new HashSet<Integer>();
 		for(Covered c: this.getCovered()){
