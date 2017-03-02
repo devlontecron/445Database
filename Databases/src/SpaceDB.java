@@ -84,7 +84,6 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie 
 	 * @param movie
 	 */
 	public void addLot(Lot lot) {
@@ -101,7 +100,7 @@ public class SpaceDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	/**
@@ -111,7 +110,7 @@ public class SpaceDB {
 	 * @param data value to supply
 	 */
 	public void updateStaff(int row, String columnName, Object data) {
-		
+
 		Staff staff = staffList.get(row);
 		int id = staff.getStaffNo();
 		String sql = "update d1durham.Lot set " + columnName + " = ?  StaffNo = ?";
@@ -128,8 +127,8 @@ public class SpaceDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		} 
-		
+		}
+
 	}
 
 	/**
@@ -168,7 +167,7 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie 
+	 * @param movie
 	 */
 	public void addStaff(Staff staff) {
 		String sql = "insert into d1durham.Movies values " + "(?, ?, ?, null); ";
@@ -183,7 +182,7 @@ public class SpaceDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	/**
@@ -221,7 +220,7 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie 
+	 * @param movie
 	 */
 	public void addCovered(Covered covered) {
 		String sql = "insert into d1durham.Movies values " + "(?, ?, null); ";
@@ -235,9 +234,9 @@ public class SpaceDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		} 
+		}
 	}
-	
+
 	public List<Uncovered> getUncovered() throws SQLException {
 		if (conn == null) {
 			createConnection();
@@ -267,7 +266,7 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie 
+	 * @param movie
 	 */
 	public void addUncovered(Uncovered uncovered) {
 		String sql = "insert into d1durham.Movies values " + "(?, null); ";
@@ -280,9 +279,9 @@ public class SpaceDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		} 
+		}
 	}
-	
+
 	public List<SpaceBooking> getBookings() throws SQLException {
 		if (conn == null) {
 			createConnection();
@@ -316,7 +315,7 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie 
+	 * @param movie
 	 */
 	public void addBooking(SpaceBooking booking) {
 		String sql = "insert into d1durham.Movies values " + "(?, ?, ?, ?, ?, null); ";
@@ -328,14 +327,14 @@ public class SpaceDB {
 			preparedStatement.setInt(2, booking.getSpaceNo());
 			preparedStatement.setInt(3, booking.getStaffNo());
 			preparedStatement.setDate(5, booking.getDateOfVisit());
-			
+
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		} 
+		}
 	}
-	
+
 	public List<StaffSpace> getStaffSpaces() throws SQLException {
 		if (conn == null) {
 			createConnection();
@@ -366,7 +365,7 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie 
+	 * @param movie
 	 */
 	public void addStaffSpace(SpaceBooking booking) {
 		String sql = "insert into d1durham.Movies values " + "(?, ?, null); ";
@@ -375,21 +374,21 @@ public class SpaceDB {
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setInt(1, booking.getStaffNo());
 			preparedStatement.setInt(2, booking.getSpaceNo());
-			
+
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		} 
+		}
 	}
-	
-	
+
+
 	/*
 	 * Below go the utility things
 	 */
-	
+
 	public Set<Integer> getUnavailable() throws SQLException{
-		
+
 		Set<Integer> toReturn = new HashSet<Integer>();
 		for(Space s: this.getBookings()){
 			toReturn.add(s.getSpaceNo());
@@ -399,10 +398,10 @@ public class SpaceDB {
 		}
 		return toReturn;
 	}
-	
+
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie 
+	 * @param movie
 	 */
 	public void addSpace(Space space) {
 		String sql = "insert into youruwnetid.Movies values " + "(?, ?, null); ";
@@ -411,14 +410,13 @@ public class SpaceDB {
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setInt(1, space.getSpaceNo());
 			preparedStatement.setInt(2, space.getSpaceType());
-			
+
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		} 
+		}
 	}
-	
 
 	public List<Space> getSpaces() throws SQLException {
 		if (conn == null) {
