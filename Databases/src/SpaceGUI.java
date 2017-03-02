@@ -29,7 +29,7 @@ public class SpaceGUI extends JFrame implements ActionListener, TableModelListen
             "Length",
             "Genre",
             "StudioName"};
-	
+	private String
 	private Object[][] data;
 	private JTable table;
 	private JScrollPane scrollPane;
