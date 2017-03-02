@@ -24,7 +24,7 @@ public class SpaceDB {
 	private static Connection conn;
 	private List<Lot> list;
 	private List<Staff> staffList;
-	private List<Space> spaceList;
+	private List<Space> staffSpaces;
 	private List<Covered> coveredList;
 	private List<Uncovered> uncoveredList;
 	private List<SpaceBooking> bookingList;
@@ -36,7 +36,7 @@ public class SpaceDB {
 	 * @throws SQLException
 	 */
 	public static void createConnection() throws SQLException {
-
+		
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", userName);
 		connectionProps.put("password", password);
@@ -84,7 +84,7 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie
+	 * @param movie 
 	 */
 	public void addLot(Lot lot) {
 		String sql = "insert into d1durham.Movies values " + "(?, ?, ?, ?, null); ";
@@ -100,7 +100,7 @@ public class SpaceDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		}
+		} 
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class SpaceDB {
 	 * @param data value to supply
 	 */
 	public void updateStaff(int row, String columnName, Object data) {
-
+		
 		Staff staff = staffList.get(row);
 		int id = staff.getStaffNo();
 		String sql = "update d1durham.Lot set " + columnName + " = ?  StaffNo = ?";
@@ -127,8 +127,8 @@ public class SpaceDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		}
-
+		} 
+		
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie
+	 * @param movie 
 	 */
 	public void addStaff(Staff staff) {
 		String sql = "insert into d1durham.Movies values " + "(?, ?, ?, null); ";
@@ -182,7 +182,7 @@ public class SpaceDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		}
+		} 
 	}
 
 	/**
@@ -220,7 +220,7 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie
+	 * @param movie 
 	 */
 	public void addCovered(Covered covered) {
 		String sql = "insert into d1durham.Movies values " + "(?, ?, null); ";
@@ -234,9 +234,9 @@ public class SpaceDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		}
+		} 
 	}
-
+	
 	public List<Uncovered> getUncovered() throws SQLException {
 		if (conn == null) {
 			createConnection();
@@ -266,7 +266,7 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie
+	 * @param movie 
 	 */
 	public void addUncovered(Uncovered uncovered) {
 		String sql = "insert into d1durham.Movies values " + "(?, null); ";
@@ -279,9 +279,9 @@ public class SpaceDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		}
+		} 
 	}
-
+	
 	public List<SpaceBooking> getBookings() throws SQLException {
 		if (conn == null) {
 			createConnection();
@@ -315,7 +315,7 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie
+	 * @param movie 
 	 */
 	public void addBooking(SpaceBooking booking) {
 		String sql = "insert into d1durham.Movies values " + "(?, ?, ?, ?, ?, null); ";
@@ -327,14 +327,14 @@ public class SpaceDB {
 			preparedStatement.setInt(2, booking.getSpaceNo());
 			preparedStatement.setInt(3, booking.getStaffNo());
 			preparedStatement.setDate(5, booking.getDateOfVisit());
-
+			
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		}
+		} 
 	}
-
+	
 	public List<StaffSpace> getStaffSpaces() throws SQLException {
 		if (conn == null) {
 			createConnection();
@@ -365,7 +365,7 @@ public class SpaceDB {
 
 	/**
 	 * Adds a new movie to the table.
-	 * @param movie
+	 * @param movie 
 	 */
 	public void addStaffSpace(SpaceBooking booking) {
 		String sql = "insert into d1durham.Movies values " + "(?, ?, null); ";
@@ -374,75 +374,28 @@ public class SpaceDB {
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setInt(1, booking.getStaffNo());
 			preparedStatement.setInt(2, booking.getSpaceNo());
-
+			
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-		}
+		} 
 	}
-
-
+	
+	
 	/*
 	 * Below go the utility things
 	 */
-
+	
 	public Set<Integer> getUnavailable() throws SQLException{
-
+		
 		Set<Integer> toReturn = new HashSet<Integer>();
-		for(Space s: this.getBookings()){
-			toReturn.add(s.getSpaceNo());
+		for(Covered c: this.getCovered()){
+			toReturn.add(c.getSpaceNo());
 		}
-		for(Space s: this.getStaffSpaces()){
-			toReturn.add(s.getSpaceNo());
+		for(Uncovered u: this.getUncovered()){
+			toReturn.add(u.getSpaceNo());
 		}
 		return toReturn;
-	}
-
-	/**
-	 * Adds a new movie to the table.
-	 * @param movie
-	 */
-	public void addSpace(Space space) {
-		String sql = "insert into youruwnetid.Movies values " + "(?, ?, null); ";
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setInt(1, space.getSpaceNo());
-			preparedStatement.setInt(2, space.getSpaceType());
-
-			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println(e);
-			e.printStackTrace();
-		}
-	}
-
-	public List<Space> getSpaces() throws SQLException {
-		if (conn == null) {
-			createConnection();
-		}
-		Statement stmt = null;
-		String query = "select SpaceNo, SpaceType "
-				+ "from youruwnetid.Lots ";
-
-		staffSpaceList = new ArrayList<StaffSpace>();
-		try {
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				int number = rs.getInt("SpaceNo");
-				String type = rs.getString("SpaceType");
-				Space spacepace = new Space(type, number);
-				spaceList.add(space);
-			}
-		} catch (SQLException e) {
-			System.out.println(e);
-		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-		}
-		return spaceList;
 	}
 }
