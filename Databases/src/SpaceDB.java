@@ -36,7 +36,6 @@ public class SpaceDB {
 	 * @throws SQLException
 	 */
 	public static void createConnection() throws SQLException {
-		
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", userName);
 		connectionProps.put("password", password);
@@ -85,6 +84,7 @@ public class SpaceDB {
 	/**
 	 * Adds a new movie to the table.
 	 * @param movie 
+	 * @param movie
 	 */
 	public void addLot(Lot lot) {
 		String sql = "insert into d1durham.Movies values " + "(?, ?, ?, ?, null); ";
