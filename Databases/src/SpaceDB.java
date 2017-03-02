@@ -419,6 +419,7 @@ public class SpaceDB {
 		} 
 	}
 	
+
 	public List<Space> getSpaces() throws SQLException {
 		if (conn == null) {
 			createConnection();
