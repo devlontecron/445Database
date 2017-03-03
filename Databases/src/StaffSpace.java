@@ -1,20 +1,18 @@
-/*
- * updateable
+/**
+ * A class that represents a staff space
+ * @author Josiah Hopkins, Devin Durham
  */
+
 public class StaffSpace {
 	private int StaffNo;
 	private int SpaceNo;
 	
 	
 	/**
-	 * Initialize the movie parameters.
-	 * @param title
+	 * Initialize the staff space parameters.
 	 * @param StaffNo
 	 * @param SpaceNo
-	 * @param genre
-	 * @param studioName
-	 * @throws IllegalArgumentException if title or genre or studio name are null or empty,
-	 * SpaceNo <= 0, StaffNo < 1920.
+	 * SpaceNo, StaffNo < 1.
 	 */
 	public StaffSpace(int StaffNo, int SpaceNo) {
 		setStaffNo(StaffNo);
@@ -22,34 +20,45 @@ public class StaffSpace {
 	}
 	
 	/**
-	 * Returns the StaffNo the movie was made.
+	 * Returns the StaffNo.
 	 * @return StaffNo
 	 */
 	public int getStaffNo()
 	{
 		return StaffNo;
 	}
-	
+
 	/**
-	 * Sets the movie StaffNo.
+	 * Sets the StaffNo.
 	 * @param StaffNo
-	 * @throws IllegalArgumentException if StaffNo is before 1920. 
+	 * @throws IllegalArgumentException if StaffNo is  < 1. 
 	 */
 	private void setStaffNo(int StaffNo)
 	{
+
+		if (StaffNo < 1)
+			throw new IllegalArgumentException("StaffNo Can't be < 1");
 		this.StaffNo = StaffNo;
 	}
 	
 	/**
-	 * Returns the SpaceNo of the movie.
+	 * Returns the SpaceNo.
 	 * @return SpaceNo
 	 */
 	public int getSpaceNo()
 	{
 		return SpaceNo;
 	}
-	
+
+	/**
+	 * Sets the SpaceNo.
+	 * @param SpaceNo
+	 * @throws IllegalArgumentException if SpaceNo is  < 1. 
+	 */
 	private void setSpaceNo(int SpaceNo){
+
+		if (SpaceNo < 1)
+			throw new IllegalArgumentException("SpaceNo Can't be < 1");
 		this.SpaceNo = SpaceNo;
 	}
 }

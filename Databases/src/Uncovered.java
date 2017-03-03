@@ -1,20 +1,19 @@
+/**
+ * A class that represents an uncovered space
+ * @author Josiah Hopkins, Devin Durham
+ */
 
 public class Uncovered {
 	private int SpaceNo;
 	
 	
 	/**
-	 * Initialize the movie parameters.
-	 * @param title
-	 * @param year
-	 * @param length
-	 * @param genre
-	 * @param studioName
-	 * @throws IllegalArgumentException if title or genre or studio name are null or empty,
-	 * length <= 0, year < 1920.
+	 * Initialize the SpaceNo parameters.
+	 * @param SpaceNo
+	 * @throws IllegalArgumentException if spaceNo < 1
 	 */
 	public Uncovered(int SpaceNo) {
-		this.SpaceNo = SpaceNo;
+		this.SpaceNo = this.setSpaceNo(SpaceNo);
 	}
 	
 	/**
@@ -24,5 +23,18 @@ public class Uncovered {
 	public int getSpaceNo()
 	{
 		return SpaceNo;
+	}
+	
+	/**
+	 * Modifies the SpaceNo
+	 * @param SpaceNo
+	 * @throws IllegalArgumentException if SpaceNo < 1.
+	 */
+	private void setSpaceNo(int SpaceNo)
+	{
+		if(SpaceNo < 1){
+			throw new IllegalArgumentException("SpaceNo can't be less than 1");
+		}
+		this.SpaceNo = SpaceNo;		
 	}
 }

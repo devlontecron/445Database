@@ -1,3 +1,8 @@
+/**
+ * A class that represents a space booking
+ * @author Josiah Hopkins, Devin Durham
+ */
+
 import java.sql.Date;
 
 public class SpaceBooking {
@@ -9,14 +14,14 @@ public class SpaceBooking {
 	
 	
 	/**
-	 * Initialize the movie parameters.
+	 * Initialize the space booking parameters.
 	 * @param VisitorLic
 	 * @param BookingId
 	 * @param SpaceNo
-	 * @param genre
-	 * @param studioName
-	 * @throws IllegalArgumentException if VisitorLic or genre or studio name are null or empty,
-	 * SpaceNo <= 0, BookingId < 1920.
+	 * @param StaffNo
+	 * @param DateofVisit
+	 * @throws IllegalArgumentException if VisitorLic or DateOfVisi are null or empty,
+	 * SpaceNo, staffNo, bookingId < 1.
 	 */
 	public SpaceBooking(String VisitorLic, int BookingId, int SpaceNo, int StaffNo,
 			Date DateOfVisit) {
@@ -28,7 +33,7 @@ public class SpaceBooking {
 	}
 
 	/**
-	 * Returns the VisitorLic of the movie.
+	 * Returns the VisitorLic.
 	 * @return movie VisitorLic
 	 */
 	public String getVisitorLic()
@@ -37,7 +42,7 @@ public class SpaceBooking {
 	}
 	
 	/**
-	 * Modifies the VisitorLic of the movie.
+	 * Modifies the VisitorLic.
 	 * @param VisitorLic
 	 * @throws IllegalArgumentException if VisitorLic is null or empty.
 	 */
@@ -49,7 +54,7 @@ public class SpaceBooking {
 	}
 	
 	/**
-	 * Returns the BookingId the movie was made.
+	 * Returns the BookingId.
 	 * @return BookingId
 	 */
 	public int getBookingId()
@@ -60,12 +65,12 @@ public class SpaceBooking {
 	/**
 	 * Sets the movie BookingId.
 	 * @param BookingId
-	 * @throws IllegalArgumentException if BookingId is before 1920. 
+	 * @throws IllegalArgumentException if BookingId < 1. 
 	 */
 	private void setBookingId(int BookingId)
 	{
-		if (BookingId < 1920)
-			throw new IllegalArgumentException("Movie BookingId cannot be before 1920.");
+		if (BookingId < 1)
+			throw new IllegalArgumentException("Booking id cannot be less than 1");
 		this.BookingId = BookingId;
 	}
 	
@@ -79,21 +84,21 @@ public class SpaceBooking {
 	}
 	
 	/**
-	 * Modifies the SpaceNo of the movie.
+	 * Modifies the SpaceNo
 	 * @param SpaceNo
 	 * @throws IllegalArgumentException if SpaceNo is negative or 0.
 	 */
 	private void setSpaceNo(int SpaceNo)
 	{
-		if (SpaceNo <= 0)
-			throw new IllegalArgumentException("Movie SpaceNo cannot be negative or 0.");
-		
+		if (SpaceNo <= 0){
+			throw new IllegalArgumentException("SpaceNo cannot be negative or 0.");
+		}
 		this.SpaceNo = SpaceNo;
 	}
 	
 	/**
-	 * Returns the genre of the movie.
-	 * @return genre
+	 * Returns the staff number.
+	 * @return staff number
 	 */
 	public int getStaffNo()
 	{
@@ -102,11 +107,14 @@ public class SpaceBooking {
 	
 	/**
 	 * Sets the genre of the movie.
-	 * @param genre
-	 * @throws IllegalArgumentException if genre is null or empty.
+	 * @param staffNo
+	 * @throws IllegalArgumentException if StaffNo < 1.
 	 */
 	private void setStaffNo(int StaffNo)
 	{
+		if (StaffNo < 1){
+			throw new IllegalArgumentException("StaffNo cannot be negative or 0.");
+		}
 		this.StaffNo = StaffNo;
 	}
 	
@@ -121,14 +129,14 @@ public class SpaceBooking {
 	
 	/**
 	 * Sets the name of the studio. 
-	 * @param studioName
-	 * @throws IllegalArgumentException if studio name is null or empty.
+	 * @param DateOfVisit
+	 * @throws IllegalArgumentException if date of visit is null.
 	 */
 	private void setDateOfVisit(Date DateOfVisit)
 	{
-		if (DateOfVisit == null)
+		if (DateOfVisit == null){
 			throw new IllegalArgumentException("Please supply a valid date.");
-		
+		}
 		this.DateOfVisit = DateOfVisit;
 	}
 }

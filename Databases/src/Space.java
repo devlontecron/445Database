@@ -1,20 +1,18 @@
-/*
- * updateable
+/**
+ * A class that represents a space
+ * @author Josiah Hopkins, Devin Durham
  */
+
 public class Space {
 	private int SpaceNo;
 	private String SpaceType;
 	
 	
 	/**
-	 * Initialize the movie parameters.
+	 * Initialize the space parameters.
 	 * @param SpaceType
 	 * @param SpaceNo
-	 * @param length
-	 * @param genre
-	 * @param studioName
-	 * @throws IllegalArgumentException if SpaceType or genre or studio name are null or empty,
-	 * length <= 0, SpaceNo < 1920.
+	 * @throws IllegalArgumentException if SpaceType is null or empty or SpaceNo < 1.
 	 */
 	public Space(String SpaceType, int SpaceNo) {
 		setSpaceType(SpaceType);
@@ -22,8 +20,8 @@ public class Space {
 	}
 
 	/**
-	 * Returns the SpaceType of the movie.
-	 * @return movie SpaceType
+	 * Returns the SpaceType.
+	 * @return SpaceType
 	 */
 	public String getSpaceType()
 	{
@@ -31,7 +29,7 @@ public class Space {
 	}
 	
 	/**
-	 * Modifies the SpaceType of the movie.
+	 * Modifies the SpaceType of the space.
 	 * @param SpaceType
 	 * @throws IllegalArgumentException if SpaceType is null or empty.
 	 */
@@ -43,21 +41,24 @@ public class Space {
 	}
 	
 	/**
-	 * Returns the SpaceNo the movie was made.
+	 * Returns the SpaceNo.
 	 * @return SpaceNo
 	 */
 	public int getSpaceNo()
 	{
 		return SpaceNo;
 	}
-	
+
 	/**
-	 * Sets the movie SpaceNo.
+	 * Sets the SpaceNo.
 	 * @param SpaceNo
-	 * @throws IllegalArgumentException if SpaceNo is before 1920. 
+	 * @throws IllegalArgumentException if SpaceNo is less than 1. 
 	 */
 	private void setSpaceNo(int SpaceNo)
 	{
+		if(SpaceNo < 1){
+			throw new IllegalArgumentException("Provide a valid number");
+		}
 		this.SpaceNo = SpaceNo;
 	}
 }

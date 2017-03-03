@@ -1,6 +1,8 @@
-/*
- * updateable
+/**
+ * A class that represents a staff
+ * @author Josiah Hopkins, Devin Durham
  */
+
 public class Staff {
 	private String LicPlateNo;
 	private int StaffNo;
@@ -8,14 +10,12 @@ public class Staff {
 	
 	
 	/**
-	 * Initialize the movie parameters.
-	 * @param title
+	 * Initialize the staff parameters.
+	 * @param LicPlateNo
 	 * @param StaffNo
 	 * @param PhoneExt
-	 * @param genre
-	 * @param studioName
-	 * @throws IllegalArgumentException if title or genre or studio name are null or empty,
-	 * PhoneExt <= 0, StaffNo < 1920.
+	 * @throws IllegalArgumentException if License number is null or empty,
+	 * PhoneExt < 1, StaffNo < 1.
 	 */
 	public Staff(String LicPlateNo, int PhoneExt, int StaffNo) {
 		setLicPlateNo(LicPlateNo);
@@ -24,8 +24,8 @@ public class Staff {
 	}
 
 	/**
-	 * Returns the title of the movie.
-	 * @return movie title
+	 * Returns the LicensePlate.
+	 * @return license plate
 	 */
 	public String getLicPlateNo()
 	{
@@ -33,19 +33,19 @@ public class Staff {
 	}
 	
 	/**
-	 * Modifies the title of the movie.
+	 * Modifies the license plate.
 	 * @param title
 	 * @throws IllegalArgumentException if title is null or empty.
 	 */
 	public void setLicPlateNo(String LicPlateNo)
 	{
 		if (LicPlateNo == null || LicPlateNo.length() == 0 )
-			throw new IllegalArgumentException("Please supply a valid title.");
+			throw new IllegalArgumentException("Please supply a valid license plate.");
 		this.LicPlateNo = LicPlateNo;
 	}
 	
 	/**
-	 * Returns the StaffNo the movie was made.
+	 * Returns the StaffNo.
 	 * @return StaffNo
 	 */
 	public int getStaffNo()
@@ -56,17 +56,17 @@ public class Staff {
 	/**
 	 * Sets the movie StaffNo.
 	 * @param StaffNo
-	 * @throws IllegalArgumentException if StaffNo is before 1920. 
+	 * @throws IllegalArgumentException if StaffNo < 1. 
 	 */
 	private void setStaffNo(int StaffNo)
 	{
-		if (StaffNo < 1920)
-			throw new IllegalArgumentException("Movie StaffNo cannot be before 1920.");
+		if (StaffNo < 1)
+			throw new IllegalArgumentException("StaffNo Can't be < 1");
 		this.StaffNo = StaffNo;
 	}
 	
 	/**
-	 * Returns the PhoneExt of the movie.
+	 * Returns the PhoneExt.
 	 * @return PhoneExt
 	 */
 	public int getPhoneExt()
@@ -81,8 +81,8 @@ public class Staff {
 	 */
 	public void setPhoneExt(int PhoneExt)
 	{
-		if (PhoneExt <= 0)
-			throw new IllegalArgumentException("Movie PhoneExt cannot be negative or 0.");
+		if (PhoneExt < 1)
+			throw new IllegalArgumentException(" PhoneExt cannot be < 1.");
 		
 		this.PhoneExt = PhoneExt;
 	}
