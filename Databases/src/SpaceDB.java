@@ -463,4 +463,21 @@ public class SpaceDB {
 		}
 		return spaceList;
 	}
+	
+	/**
+	 * Returns a list of available space objects from the database.
+	 * @return list of spaces
+	 * @throws SQLException
+	 */
+	public List<Spaces> getAvailable(){
+		List<Spaces> toReturn = this.getSpaces();
+		List<Spaces> temp = toReturn.copy();
+		Set<Integer> noWant = this.getUnavailable();
+		for(Space s: temp){
+			if(noWant.contains(s.getSpaceNo())){
+				toReturn.remove(s);
+			}
+		}
+		return toReturn;
+	}
 }
